@@ -5,7 +5,7 @@ Learning Journey turns a topic you want to learn into a study plan you can follo
 or six stages, from the basics to practical skill.
 
 One person built it with AWS's AI-Driven Development Life Cycle (AI-DLC) v2.11.3, running in Kiro CLI. The build
-started from a single paragraph, [`intent.md`](intent.md), at 13:08 IST on 10 November 2026. The site was live on
+started from a one-page intent file, [`intent.md`](intent.md), at 13:08 IST on 10 November 2026. The site was live on
 AWS at 22:15 on 11 November, and the last lifecycle stage closed at 23:36 that night. This repository holds the app's
 code and the full AI-DLC record of how it came to exist.
 
@@ -43,7 +43,7 @@ Each stage follows the same loop:
 
 1. A lead role writes its questions to a file, each with a recommended answer, and you answer in the file.
 2. The lead role reads your answers back and asks you to confirm them before it writes anything.
-3. It writes the stage's documents and tags each line with its source, such as `[desc]` for the original paragraph
+3. It writes the stage's documents and tags each line with its source, such as `[desc]` for the original intent
    or `[Q3]` for an answer.
 4. A reviewer role, a second agent that produces nothing of its own, checks the work and logs findings by severity.
 5. You approve, or send the work back. The orchestrator records the result and releases the next stage.
@@ -80,7 +80,7 @@ The quality engineer recorded two requirements as not met:
 
 | Path | Contents |
 |---|---|
-| `intent.md` | The one paragraph that started the build |
+| `intent.md` | The intent file that started the build |
 | `backend/` | Lambda source (`src/learning_journey/`) and pytest tests |
 | `frontend/` | TypeScript app, styles, fonts, and Vitest tests including accessibility checks |
 | `infra/` | CDK app in Python (`app.py`, `stacks/journey_stack.py`) and stack tests |
@@ -99,7 +99,7 @@ signed in to your account.
 Check Bedrock access first:
 
 ```bash
-aws bedrock-runtime converse --region us-east-1 --model-id us.amazon.nova-lite-v1:0 \
+aws bedrock-runtime converse --region us-east-1 --model-id amazon.nova-lite-v1:0 \
   --messages '[{"role":"user","content":[{"text":"Say ok"}]}]' \
   --query "output.message.content[0].text"
 ```
@@ -149,7 +149,7 @@ aidlc doctor
 kiro-cli --v3
 ```
 
-In Kiro, run `/aidlc --doctor`, then type `/aidlc` and paste your paragraph. Write it the way `intent.md` is written:
+In Kiro, run `/aidlc --doctor`, then type `/aidlc` and paste your intent. Write it the way `intent.md` is written:
 what your user gets, your constraints, and an explicit out-of-scope line. When AI-DLC asks how you want to answer,
 choose "I'll edit the file", put a letter after each `[Answer]:` and type `done`. At each gate, fix the Major
 findings and compare the stage's output with your decisions from earlier stages.
