@@ -1,0 +1,1 @@
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -p no:cacheprovider backend/tests infra/tests -q --cov=backend/src/learning_journey --cov-fail-under=80 && npm --prefix frontend run coverage && npm --prefix frontend run build

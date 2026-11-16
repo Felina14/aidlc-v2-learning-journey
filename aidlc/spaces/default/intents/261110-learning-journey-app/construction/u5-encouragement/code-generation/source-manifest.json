@@ -1,0 +1,94 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-encouragement",
+  "version": 1,
+  "writes": [
+    {
+      "path": "backend/src/learning_journey/validation.py"
+    },
+    {
+      "path": "backend/src/learning_journey/store.py"
+    },
+    {
+      "path": "backend/src/learning_journey/handler.py"
+    },
+    {
+      "path": "backend/src/learning_journey/models.py"
+    },
+    {
+      "path": "backend/tests/test_milestone_validation.py"
+    },
+    {
+      "path": "backend/tests/test_store.py"
+    },
+    {
+      "path": "backend/tests/test_handler.py"
+    },
+    {
+      "path": "frontend/src/nudge.ts"
+    },
+    {
+      "path": "frontend/src/milestones.ts"
+    },
+    {
+      "path": "frontend/src/certificate.ts"
+    },
+    {
+      "path": "frontend/src/api.ts"
+    },
+    {
+      "path": "frontend/src/state.ts"
+    },
+    {
+      "path": "frontend/src/render.ts"
+    },
+    {
+      "path": "frontend/src/app.ts"
+    },
+    {
+      "path": "frontend/src/types.ts"
+    },
+    {
+      "path": "frontend/src/goal.ts"
+    },
+    {
+      "path": "frontend/index.html"
+    },
+    {
+      "path": "frontend/styles.css"
+    },
+    {
+      "path": "frontend/tests/blocked-words.ts"
+    },
+    {
+      "path": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "path": "frontend/tests/milestones.test.ts"
+    },
+    {
+      "path": "frontend/tests/certificate.test.ts"
+    },
+    {
+      "path": "frontend/tests/api.test.ts"
+    },
+    {
+      "path": "frontend/tests/state.test.ts"
+    },
+    {
+      "path": "frontend/tests/render.test.ts"
+    },
+    {
+      "path": "frontend/tests/app.test.ts"
+    },
+    {
+      "path": "infra/stacks/journey_stack.py"
+    },
+    {
+      "path": "infra/tests/test_stack.py"
+    },
+    {
+      "path": "frontend/tests/helpers.ts"
+    }
+  ]
+}

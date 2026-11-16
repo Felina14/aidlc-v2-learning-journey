@@ -1,0 +1,5 @@
+aws-cdk-lib==2.275.0
+constructs==10.8.1
+pytest==9.2.0
+ruff==0.17.4
+black==26.10.1

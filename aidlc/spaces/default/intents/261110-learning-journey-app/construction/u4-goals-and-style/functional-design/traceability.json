@@ -1,0 +1,28 @@
+{
+  "stage": "functional-design",
+  "unit": "u4-goals-and-style",
+  "upstream_ids": ["AC1.2.1", "AC1.2.2", "AC1.2.3", "AC1.2.4", "AC1.2.5", "AC1.2.6", "AC3.1.1", "AC3.1.2", "AC3.1.3", "AC4.1.1", "AC4.1.2", "AC4.1.3", "AC4.2.1", "AC4.2.2", "AC4.2.3"],
+  "coverage": [
+    { "id": "AC1.2.1", "status": "OK", "target": "BR33.1" },
+    { "id": "AC1.2.2", "status": "OK", "target": "BR33.3, BR33.4" },
+    { "id": "AC1.2.3", "status": "OK", "target": "BR33.3, BR33.4, BR33.6" },
+    { "id": "AC1.2.4", "status": "OK", "target": "BR33.3" },
+    { "id": "AC1.2.5", "status": "OK", "target": "BR33.5" },
+    { "id": "AC1.2.6", "status": "OK", "target": "BR33.2" },
+    { "id": "AC3.1.1", "status": "N/A", "target": "delivered by u2-progress (marking a stage and the progress figures)" },
+    { "id": "AC3.1.2", "status": "N/A", "target": "delivered by u2-progress (the failed-save behaviour for a stage mark); a goal change follows the same pattern in BR31.2" },
+    { "id": "AC3.1.3", "status": "N/A", "target": "delivered by u2-progress (two-tab safety for a stage mark); the goal call is also a single-field idempotent update, BR32.1" },
+    { "id": "AC4.1.1", "status": "OK", "target": "BR30.1" },
+    { "id": "AC4.1.2", "status": "OK", "target": "BR31.1, BR31.2" },
+    { "id": "AC4.1.3", "status": "OK", "target": "BR30.1" },
+    { "id": "AC4.2.1", "status": "OK", "target": "BR30.4" },
+    { "id": "AC4.2.2", "status": "OK", "target": "BR30.2" },
+    { "id": "AC4.2.3", "status": "OK", "target": "BR30.3" }
+  ],
+  "reverse": [
+    { "id": "BR31.3", "status": "N/A", "target": "behaviour when the journey is gone or the request is invalid; no acceptance criterion of its own" },
+    { "id": "BR32.1", "status": "N/A", "target": "technical rule for the goal call (contract C1, C5); no acceptance criterion of its own" },
+    { "id": "BR33.6", "status": "N/A", "target": "what is stored and shown for the style; cited by AC1.2.3 for the breakdown but with no acceptance criterion of its own for the header name" },
+    { "id": "BR34.1", "status": "N/A", "target": "a replacement journey starts with no goal date (functional design Q3); no acceptance criterion of its own" }
+  ]
+}

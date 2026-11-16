@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u4-goals-and-style",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "No infrastructure needed: accessibility is a page-level concern; the pipeline's accessibility step stays a placeholder until U6" },
+    { "id": "NFR2", "status": "OK", "target": "The goal change is one conditional update within the 2 s store limit; the model call keeps its 12 s per-call limit and 15 s clock; the longer instructor and planner replies may hit it more often (accepted risk, measured in the smoke checks); the output cap is raised for those styles" },
+    { "id": "NFR3", "status": "OK", "target": "The template fallback and its alarm are unchanged and now also absorb replies rejected by the stricter style checks" },
+    { "id": "NFR4", "status": "OK", "target": "No new service; slightly more tokens per journey for two styles, bounded by the daily cap and the throttle; at most two extra custom metrics; Lambda concurrency stays unreserved under the account limit of 10" },
+    { "id": "NFR5", "status": "OK", "target": "No new resource is created, so the first unit's destroy and tag checks still remove everything" },
+    { "id": "NFR6", "status": "OK", "target": "No new permission: the role keeps exactly GetItem, PutItem, UpdateItem and DeleteItem on the one table; HTTPS redirect and gitleaks unchanged" },
+    { "id": "NFR7", "status": "OK", "target": "Amazon Nova Lite only, unchanged; the style changes only the prompt and the reply checks" },
+    { "id": "NFR8", "status": "N/A", "target": "No infrastructure needed: browser and device support is a page concern" },
+    { "id": "NFR9", "status": "OK", "target": "Added Python, TypeScript and stack tests inside the existing GitHub Actions jobs, with the 80% floor kept" },
+    { "id": "NFR10", "status": "OK", "target": "Existing structured log lines gain the chosen style (a code-generation change); GoalChangeFailed and GoalChangeTimeMs metric filters and a dashboard line added; the template-fallback alarm covers the new reply checks" },
+    { "id": "NFR11", "status": "OK", "target": "One small edit to the one existing CDK stack (a route, a filter, a dashboard line); manual cdk deploy; no AWS keys in GitHub" }
+  ]
+}

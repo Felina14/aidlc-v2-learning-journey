@@ -1,0 +1,46 @@
+{
+  "stage": "code-generation",
+  "unit": "u6-accessibility-pass",
+  "version": 1,
+  "writes": [
+    {
+      "path": "frontend/tests/a11y-states.ts"
+    },
+    {
+      "path": "frontend/tests/a11y.test.ts"
+    },
+    {
+      "path": "frontend/tests/structure.test.ts"
+    },
+    {
+      "path": "frontend/tests/contrast.test.ts"
+    },
+    {
+      "path": "frontend/tests/keyboard.test.ts"
+    },
+    {
+      "path": "frontend/tests/confirm-dialog.test.ts"
+    },
+    {
+      "path": "frontend/package.json"
+    },
+    {
+      "path": "frontend/package-lock.json"
+    },
+    {
+      "path": "frontend/index.html"
+    },
+    {
+      "path": "frontend/styles.css"
+    },
+    {
+      "path": "frontend/src/render.ts"
+    },
+    {
+      "path": "frontend/src/state.ts"
+    },
+    {
+      "path": ".github/workflows/ci.yml"
+    }
+  ]
+}

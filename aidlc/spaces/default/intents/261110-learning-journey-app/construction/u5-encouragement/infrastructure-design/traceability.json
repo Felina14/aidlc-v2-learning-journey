@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u5-encouragement",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "No infrastructure needed: accessibility is a page-level concern; the pipeline's accessibility step stays a placeholder until U6" },
+    { "id": "NFR2", "status": "OK", "target": "The milestone record is one conditional update within the 2 s store limit, and the banner never waits for it (BR44.2)" },
+    { "id": "NFR3", "status": "N/A", "target": "No infrastructure needed: U5 makes no model call and the template fallback is unchanged" },
+    { "id": "NFR4", "status": "OK", "target": "No new service, no new metric or alarm; a few extra tiny requests per session; Lambda concurrency stays unreserved under the account limit of 10" },
+    { "id": "NFR5", "status": "OK", "target": "No new resource is created, and the browser-only data needs no removal, so cdk destroy still removes everything" },
+    { "id": "NFR6", "status": "OK", "target": "No new permission (the role keeps exactly GetItem, PutItem, UpdateItem and DeleteItem on the one table); the certificate name and the nudge marker never reach the server; HTTPS redirect and gitleaks unchanged" },
+    { "id": "NFR7", "status": "N/A", "target": "No infrastructure needed: U5 makes no model call; the Bedrock settings are unchanged" },
+    { "id": "NFR8", "status": "N/A", "target": "No infrastructure needed: browser and device support is a page concern" },
+    { "id": "NFR9", "status": "OK", "target": "Added Python, TypeScript and stack tests inside the existing GitHub Actions jobs, with the 80% floor kept and the blocked-word test run on every merge" },
+    { "id": "NFR10", "status": "OK", "target": "The existing structured request line covers the new route; milestone failures show in the existing 5xx and Lambda-error alarms; the certificate name is never sent so it cannot be logged" },
+    { "id": "NFR11", "status": "OK", "target": "One small edit to the one existing CDK stack (a route); manual cdk deploy; no AWS keys in GitHub" }
+  ]
+}

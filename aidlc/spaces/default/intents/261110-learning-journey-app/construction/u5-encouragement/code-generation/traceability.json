@@ -1,0 +1,152 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-encouragement",
+  "upstream_ids": [
+    "AC5.1.1",
+    "AC5.1.2",
+    "AC5.1.3",
+    "AC5.2.1",
+    "AC5.2.2",
+    "AC5.2.3",
+    "AC6.1.1",
+    "AC6.1.2",
+    "AC6.1.3",
+    "BR40.1",
+    "BR40.2",
+    "BR40.3",
+    "BR41.1",
+    "BR41.3",
+    "BR41.2",
+    "BR42.1",
+    "BR42.2",
+    "BR43.1",
+    "BR42.3",
+    "BR42.4",
+    "BR43.2",
+    "BR44.1",
+    "BR44.2",
+    "BR45.1"
+  ],
+  "coverage": [
+    {
+      "id": "AC5.1.1",
+      "status": "OK",
+      "target": "frontend/tests/milestones.test.ts"
+    },
+    {
+      "id": "AC5.1.2",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "AC5.1.3",
+      "status": "OK",
+      "target": "frontend/tests/render.test.ts"
+    },
+    {
+      "id": "AC5.2.1",
+      "status": "OK",
+      "target": "frontend/tests/certificate.test.ts"
+    },
+    {
+      "id": "AC5.2.2",
+      "status": "OK",
+      "target": "frontend/tests/app.test.ts"
+    },
+    {
+      "id": "AC5.2.3",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "AC6.1.1",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "AC6.1.2",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "AC6.1.3",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "BR40.1",
+      "status": "OK",
+      "target": "frontend/tests/milestones.test.ts"
+    },
+    {
+      "id": "BR40.2",
+      "status": "OK",
+      "target": "frontend/tests/milestones.test.ts"
+    },
+    {
+      "id": "BR40.3",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "BR41.1",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "BR41.3",
+      "status": "OK",
+      "target": "frontend/tests/render.test.ts"
+    },
+    {
+      "id": "BR41.2",
+      "status": "OK",
+      "target": "frontend/tests/app.test.ts"
+    },
+    {
+      "id": "BR42.1",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "BR42.2",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "BR43.1",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "BR42.3",
+      "status": "OK",
+      "target": "frontend/tests/nudge.test.ts"
+    },
+    {
+      "id": "BR42.4",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "BR43.2",
+      "status": "OK",
+      "target": "frontend/tests/render.test.ts"
+    },
+    {
+      "id": "BR44.1",
+      "status": "OK",
+      "target": "backend/tests/test_store.py"
+    },
+    {
+      "id": "BR44.2",
+      "status": "OK",
+      "target": "frontend/tests/state.test.ts"
+    },
+    {
+      "id": "BR45.1",
+      "status": "OK",
+      "target": "frontend/src/nudge.ts"
+    }
+  ]
+}

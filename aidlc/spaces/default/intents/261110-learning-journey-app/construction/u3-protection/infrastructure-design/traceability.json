@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u3-protection",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "No infrastructure needed: accessibility is a page-level concern; the pipeline's accessibility step stays a placeholder until U6" },
+    { "id": "NFR2", "status": "OK", "target": "Guard reserve and release are single conditional updates within the 2 s per-call store limit; a slow guard store is let through so it adds at most 2 s inside the create budget" },
+    { "id": "NFR3", "status": "OK", "target": "A guard store failure lets the request through, so a journey is still made; the template fallback is unchanged" },
+    { "id": "NFR4", "status": "OK", "target": "Daily cap of 5 per session in the existing table, no new service, two extra custom metrics and one alarm; Lambda concurrency stays unreserved under the account limit of 10" },
+    { "id": "NFR5", "status": "OK", "target": "No new resource; count items live in the table that cdk destroy removes" },
+    { "id": "NFR6", "status": "OK", "target": "Role gains only dynamodb:DeleteItem on the one table; no secrets, HTTPS redirect and gitleaks unchanged; count items hold no personal information" },
+    { "id": "NFR7", "status": "N/A", "target": "No infrastructure needed: U3 makes no model call; the Bedrock settings are unchanged" },
+    { "id": "NFR8", "status": "N/A", "target": "No infrastructure needed: browser and device support is a page concern" },
+    { "id": "NFR9", "status": "OK", "target": "Added Python, TypeScript and stack tests inside the existing GitHub Actions jobs, with the 80% floor kept" },
+    { "id": "NFR10", "status": "OK", "target": "Existing structured request log line covers the new method; DailyLimitHit and GuardSkipped metric filters, a guard-skipped alarm, the guard_skipped log line and a dashboard line added" },
+    { "id": "NFR11", "status": "OK", "target": "Edits to the one existing CDK stack; manual cdk deploy; no AWS keys in GitHub" }
+  ]
+}

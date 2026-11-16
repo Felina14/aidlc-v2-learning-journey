@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Learning Journey</title>
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-testid="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p class="site-name">Learning Journey</p>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section id="loading-screen" data-testid="loading-screen" aria-labelledby="loading-title">
+        <h1 id="loading-title">Learning Journey</h1>
+        <div class="skeleton" data-testid="skeleton" aria-hidden="true">
+          <div class="skeleton__block skeleton__block--bar"></div>
+          <div class="skeleton__block"></div>
+          <div class="skeleton__block"></div>
+          <div class="skeleton__block"></div>
+        </div>
+        <p class="hint">Loading your journey…</p>
+      </section>
+
+      <section id="home-screen" data-testid="home-screen" aria-labelledby="home-title" hidden>
+        <h1 id="home-title">What do you want to learn?</h1>
+        <form id="topic-form" data-testid="topic-form" novalidate>
+          <label for="topic-input" class="field-label">Topic</label>
+          <input
+            id="topic-input"
+            data-testid="topic-input"
+            type="text"
+            autocomplete="off"
+            placeholder="e.g. Kubernetes, data storytelling, negotiation"
+            aria-describedby="topic-hint topic-error"
+            aria-invalid="false"
+          />
+          <p id="topic-hint" class="hint">2 to 100 characters</p>
+          <p id="topic-error" data-testid="topic-error" class="message message--error" hidden></p>
+          <fieldset class="style-choice" data-testid="style-choice">
+            <legend class="field-label">Choose your teaching style</legend>
+            <div class="style-option">
+              <input
+                type="radio"
+                name="style"
+                id="style-guide"
+                value="guide"
+                data-testid="style-guide"
+                aria-describedby="style-guide-desc"
+              />
+              <label for="style-guide" class="style-option__label">Friendly guide</label>
+              <p id="style-guide-desc" class="hint style-option__desc">
+                Encouraging, with everyday examples.
+              </p>
+            </div>
+            <div class="style-option">
+              <input
+                type="radio"
+                name="style"
+                id="style-instructor"
+                value="instructor"
+                data-testid="style-instructor"
+                aria-describedby="style-instructor-desc"
+              />
+              <label for="style-instructor" class="style-option__label"
+                >Structured instructor</label
+              >
+              <p id="style-instructor-desc" class="hint style-option__desc">
+                Step by step, with at least 2 exercises and a quiz in every stage.
+              </p>
+            </div>
+            <div class="style-option">
+              <input
+                type="radio"
+                name="style"
+                id="style-planner"
+                value="planner"
+                data-testid="style-planner"
+                aria-describedby="style-planner-desc"
+              />
+              <label for="style-planner" class="style-option__label">Planner</label>
+              <p id="style-planner-desc" class="hint style-option__desc">
+                Hours for reading, exercises, mini project and quiz in every stage.
+              </p>
+            </div>
+          </fieldset>
+          <button
+            type="submit"
+            id="generate-button"
+            data-testid="generate-button"
+            class="button"
+            aria-describedby="style-hint"
+          >
+            Generate my journey
+          </button>
+          <p id="style-hint" data-testid="style-hint" class="hint">
+            Choose a teaching style to continue.
+          </p>
+          <p id="status-line" data-testid="status-line" class="status" hidden></p>
+          <p
+            id="phase-message"
+            data-testid="phase-message"
+            class="message message--error"
+            hidden
+          ></p>
+          <p id="limit-message" data-testid="limit-message" class="message" hidden></p>
+          <button
+            type="button"
+            id="try-again-button"
+            data-testid="try-again-button"
+            class="button button--secondary"
+            hidden
+          >
+            Try again
+          </button>
+        </form>
+        <p id="home-note" data-testid="home-note" class="message" hidden></p>
+        <button
+          type="button"
+          id="back-button"
+          data-testid="back-button"
+          class="button button--secondary"
+          hidden
+        >
+          Back to my journey
+        </button>
+        <p id="back-error" data-testid="back-error" class="message message--error" hidden></p>
+        <button
+          type="button"
+          id="back-retry-button"
+          data-testid="back-retry-button"
+          class="button button--secondary"
+          hidden
+        >
+          Try again
+        </button>
+        <p class="note">
+          Journeys are made by AI and may need verification for authoritative topics.
+        </p>
+      </section>
+
+      <section
+        id="journey-screen"
+        data-testid="journey-screen"
+        aria-labelledby="journey-title"
+        hidden
+      >
+        <div
+          id="banner-area"
+          class="banner-area"
+          data-testid="banner-area"
+          role="status"
+          aria-live="polite"
+        >
+          <div id="banner" class="banner" data-testid="banner" hidden>
+            <span id="banner-icon" class="banner__icon" data-testid="banner-icon" aria-hidden="true"
+              >★</span
+            >
+            <p id="banner-text" class="banner__text" data-testid="banner-text"></p>
+            <button
+              type="button"
+              id="banner-dismiss"
+              data-testid="banner-dismiss"
+              class="button button--secondary banner__dismiss"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+        <div class="journey-header" id="journey-header" data-testid="journey-header">
+          <h1 id="journey-title" data-testid="journey-title" tabindex="-1"></h1>
+          <p id="journey-subtitle" data-testid="journey-subtitle" class="hint" hidden></p>
+          <p id="source-label" data-testid="source-label" class="label"></p>
+          <p class="progress-summary__text journey-header__percent" data-testid="header-percent">
+            <span id="progress-percent" data-testid="progress-percent"></span>
+          </p>
+          <div class="progress-summary" data-testid="progress-summary">
+            <progress
+              id="progress-bar"
+              data-testid="progress-bar"
+              max="100"
+              value="0"
+              aria-label="Journey progress"
+            ></progress>
+            <p class="progress-summary__text">
+              <span id="progress-count" data-testid="progress-count"></span>
+            </p>
+          </div>
+          <details id="header-details" class="header-details" data-testid="header-details" open>
+            <summary data-testid="header-details-summary">Details</summary>
+            <p id="journey-style" data-testid="journey-style" class="journey-header__style"></p>
+            <p id="journey-total" data-testid="journey-total" class="progress-summary__hours"></p>
+            <div class="goal-line" data-testid="goal-line">
+              <p id="goal-text" data-testid="goal-text" class="goal-line__text"></p>
+              <button
+                type="button"
+                id="goal-button"
+                data-testid="goal-button"
+                class="button button--secondary"
+                aria-controls="goal-form"
+                aria-expanded="false"
+              ></button>
+              <p
+                id="journey-pace"
+                data-testid="journey-pace"
+                class="journey-header__pace"
+                hidden
+              ></p>
+            </div>
+            <p id="goal-error" data-testid="goal-error" class="message message--error" hidden></p>
+            <div class="goal-error-actions">
+              <button
+                type="button"
+                id="goal-retry"
+                data-testid="goal-retry-button"
+                class="button button--secondary"
+                hidden
+              >
+                Try again
+              </button>
+              <button
+                type="button"
+                id="goal-home"
+                data-testid="goal-home-button"
+                class="button button--secondary"
+                hidden
+              >
+                Back to the home screen
+              </button>
+            </div>
+            <form id="goal-form" data-testid="goal-form" class="goal-form" novalidate hidden>
+              <label for="goal-input" class="field-label">Goal date</label>
+              <input
+                id="goal-input"
+                data-testid="goal-input"
+                type="date"
+                autocomplete="off"
+                aria-describedby="goal-hint goal-format-hint goal-field-error"
+                aria-invalid="false"
+              />
+              <p id="goal-hint" class="hint">Choose a date from today up to 365 days ahead.</p>
+              <p id="goal-format-hint" data-testid="goal-format-hint" class="hint" hidden>
+                Use the format YYYY-MM-DD
+              </p>
+              <p
+                id="goal-field-error"
+                data-testid="goal-field-error"
+                class="message message--error"
+                hidden
+              ></p>
+              <div class="goal-form__actions">
+                <button type="submit" id="goal-save" data-testid="goal-save-button" class="button">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  id="goal-clear"
+                  data-testid="goal-clear-button"
+                  class="button button--secondary"
+                >
+                  Clear
+                </button>
+              </div>
+            </form>
+          </details>
+        </div>
+        <section
+          id="certificate-section"
+          class="certificate"
+          data-testid="certificate-section"
+          hidden
+        >
+          <section
+            id="certificate-panel"
+            class="certificate__panel"
+            data-testid="certificate-panel"
+            aria-labelledby="certificate-title"
+          >
+            <h2 id="certificate-title" class="certificate__title">Certificate of completion</h2>
+            <p
+              id="certificate-name"
+              class="certificate__name"
+              data-testid="certificate-name"
+              hidden
+            ></p>
+            <p class="certificate__line">Completed the learning journey</p>
+            <p
+              id="certificate-topic"
+              class="certificate__topic"
+              data-testid="certificate-topic"
+            ></p>
+            <p
+              id="certificate-stages"
+              class="certificate__line"
+              data-testid="certificate-stages"
+            ></p>
+            <p id="certificate-date" class="certificate__line" data-testid="certificate-date"></p>
+          </section>
+          <div class="certificate__tools" data-testid="certificate-tools">
+            <label for="certificate-name-input" class="field-label"
+              >Name on certificate (optional, not saved)</label
+            >
+            <input
+              id="certificate-name-input"
+              data-testid="certificate-name-input"
+              type="text"
+              autocomplete="off"
+            />
+            <button
+              type="button"
+              id="certificate-print-button"
+              data-testid="certificate-print-button"
+              class="button"
+            >
+              Print or save certificate
+            </button>
+            <button
+              type="button"
+              id="certificate-back-button"
+              data-testid="certificate-back-button"
+              class="button button--secondary"
+            >
+              Back to my journey
+            </button>
+          </div>
+        </section>
+        <ol id="stage-list" data-testid="stage-list" class="stages"></ol>
+        <div class="journey-actions" data-testid="journey-actions">
+          <button
+            type="button"
+            id="start-new-button"
+            data-testid="start-new-button"
+            class="button button--secondary"
+          >
+            Start a new journey
+          </button>
+          <button
+            type="button"
+            id="delete-button"
+            data-testid="delete-button"
+            class="button button--secondary"
+          >
+            Delete my journey
+          </button>
+        </div>
+        <p class="note">Journeys are made by AI and may need verification.</p>
+      </section>
+
+      <section
+        id="message-screen"
+        data-testid="message-screen"
+        aria-labelledby="message-title"
+        hidden
+      >
+        <h1 id="message-title">Learning Journey</h1>
+        <p id="message-text" data-testid="message-text" class="message message--error"></p>
+        <button type="button" id="load-retry-button" data-testid="load-retry-button" class="button">
+          Try again
+        </button>
+      </section>
+    </main>
+
+    <dialog
+      id="confirm-dialog"
+      class="confirm-dialog"
+      data-testid="confirm-dialog"
+      aria-labelledby="confirm-title"
+      aria-describedby="confirm-text"
+    >
+      <h2 id="confirm-title" data-testid="confirm-title"></h2>
+      <p id="confirm-text" data-testid="confirm-text"></p>
+      <p
+        id="confirm-error"
+        data-testid="confirm-error"
+        class="message message--error"
+        role="status"
+        hidden
+      ></p>
+      <div class="confirm-dialog__actions">
+        <button
+          type="button"
+          id="confirm-cancel"
+          data-testid="confirm-cancel"
+          class="button button--secondary"
+        >
+          Cancel
+        </button>
+        <button type="button" id="confirm-ok" data-testid="confirm-ok" class="button"></button>
+      </div>
+    </dialog>
+
+    <div
+      id="live-region"
+      data-testid="live-region"
+      class="visually-hidden"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <footer class="site-footer">
+      <p>Journeys are made by AI and may need verification.</p>
+    </footer>
+    <script src="main.js" defer></script>
+  </body>
+</html>

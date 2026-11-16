@@ -1,0 +1,24 @@
+{
+  "stage": "functional-design",
+  "unit": "u3-protection",
+  "upstream_ids": ["AC7.1.1", "AC7.1.2", "AC7.2.1", "AC7.2.2", "AC9.2.1", "AC9.2.4", "AC9.2.2", "AC9.2.3"],
+  "coverage": [
+    { "id": "AC7.1.1", "status": "OK", "target": "BR22.1" },
+    { "id": "AC7.1.2", "status": "OK", "target": "BR22.1, BR22.2" },
+    { "id": "AC7.2.1", "status": "OK", "target": "BR23.1, BR23.2" },
+    { "id": "AC7.2.2", "status": "OK", "target": "BR23.2" },
+    { "id": "AC9.2.1", "status": "N/A", "target": "delivered by u1-skeleton (the API-wide throttle, built with the stack)" },
+    { "id": "AC9.2.4", "status": "N/A", "target": "delivered by u1-skeleton (the API-wide throttle, built with the stack)" },
+    { "id": "AC9.2.2", "status": "OK", "target": "BR20.1, BR21.1" },
+    { "id": "AC9.2.3", "status": "OK", "target": "BR21.2" }
+  ],
+  "reverse": [
+    { "id": "BR20.2", "status": "N/A", "target": "slot keep and release rule from the domain design and contract C4; no acceptance criterion of its own" },
+    { "id": "BR20.3", "status": "N/A", "target": "behaviour when the guard's store fails (contract C4 open question, functional design Q3)" },
+    { "id": "BR20.4", "status": "N/A", "target": "day boundary rule (functional design Q1); no acceptance criterion of its own" },
+    { "id": "BR20.5", "status": "N/A", "target": "keeps delete and replace from resetting the cap; technical rule with no acceptance criterion of its own" },
+    { "id": "BR22.2", "status": "N/A", "target": "a failed or refused new-journey attempt leaves the saved journey as it was (FR7.1); no acceptance criterion of its own" },
+    { "id": "BR24.1", "status": "N/A", "target": "native dialog behaviour from the interaction spec; accessibility detail with no acceptance criterion of its own" },
+    { "id": "BR24.2", "status": "N/A", "target": "carries the earlier units' page rules forward; no acceptance criterion of its own" }
+  ]
+}

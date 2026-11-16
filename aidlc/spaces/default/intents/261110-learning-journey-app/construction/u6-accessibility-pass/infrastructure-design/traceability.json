@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u6-accessibility-pass",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "OK", "target": "The axe, contrast, keyboard and structure tests run in the frontend job on every merge and the placeholder job is removed; Lighthouse and the manual passes are recorded steps in the deploy routine, with AC8.2.4 and AC8.3.2 open until the person records them (cicd-pipeline.md)" },
+    { "id": "NFR2", "status": "N/A", "target": "No infrastructure needed: no request, route or timing changes in this unit" },
+    { "id": "NFR3", "status": "N/A", "target": "No infrastructure needed: no model call and no change to the template fallback" },
+    { "id": "NFR4", "status": "OK", "target": "No new service, metric or alarm; the extra CI run is inside the free allowance of a public repository" },
+    { "id": "NFR5", "status": "OK", "target": "No new resource is created, so cdk destroy still removes everything" },
+    { "id": "NFR6", "status": "OK", "target": "No new permission and no new data sent anywhere; axe is a development-only dependency pinned to an exact version and never in the built page; gitleaks unchanged" },
+    { "id": "NFR7", "status": "N/A", "target": "No infrastructure needed: no model call; the Bedrock settings are unchanged" },
+    { "id": "NFR8", "status": "Deferred", "target": "Code Generation writes the browser-matrix script and results file; the matrix itself is a manual step the person runs after the deploy. The browser matrix (latest two releases of Chrome, Firefox, Safari and Edge) is a recorded manual step after the deploy; a browser that cannot be run is recorded as not run" },
+    { "id": "NFR9", "status": "OK", "target": "New accessibility tests run in the existing frontend job, where the 80% floor is enforced" },
+    { "id": "NFR10", "status": "N/A", "target": "No infrastructure needed: no new request, so the request line and the alarms are unchanged" },
+    { "id": "NFR11", "status": "OK", "target": "No edit to the one CDK stack; one workflow job changed; manual cdk deploy; no AWS keys in GitHub" }
+  ]
+}

@@ -1,0 +1,129 @@
+name: CI
+
+# Checks only. No AWS credentials are used or stored here, and nothing is deployed from CI:
+# deploys run by hand from the builder's machine (cicd-pipeline.md).
+#
+# Every third-party action is pinned to a full commit identifier (the version is in the comment).
+# Each identifier was checked against the action's repository with the GitHub CLI
+# (gh api repos/OWNER/REPO/git/ref/tags/TAG); to update one, check the new tag the same way.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read   # gitleaks-action lists a pull request's commits
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  python:
+    name: Python lint and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            infra/requirements.txt
+      - run: pip install -r backend/requirements.txt -r infra/requirements.txt
+      - run: ruff check backend infra
+      - run: black --check backend infra
+      # Line coverage floor of 80% comes from pyproject.toml (fail_under); never lower it.
+      - run: pytest backend/tests -q --cov=backend/src/learning_journey --cov-report=term-missing
+      - run: pytest infra/tests -q
+
+  frontend:
+    name: Frontend lint, tests and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      # Line coverage floor of 80% comes from vitest.config.ts (thresholds); never lower it.
+      # This also runs the accessibility checks (axe, contrast, keyboard, structure): they are
+      # ordinary tests under tests/ (u6-accessibility-pass).
+      - run: npm run coverage
+      - run: npm run build
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: frontend-dist
+          path: frontend/dist
+          if-no-files-found: error
+
+  dependency-audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - run: pip install pip-audit==2.10.1
+      # Blocking: packages that ship. The function bundles boto3 only; the frontend bundle has no
+      # runtime npm packages, so this step also guards the day one is added. pip-audit has no
+      # severity filter, so any advisory in boto3 fails the job; npm audit fails on high or critical.
+      - name: Packages that ship (blocking)
+        run: |
+          grep -E '^boto3==' backend/requirements.txt > runtime-requirements.txt
+          pip-audit -r runtime-requirements.txt
+          npm --prefix frontend ci
+          npm --prefix frontend audit --omit=dev --audit-level=high
+      # Report only: development and build packages (tests, lint, axe, CDK). Findings are visible
+      # in the job log but never fail the build.
+      - name: Development packages (report only)
+        continue-on-error: true
+        run: |
+          pip-audit -r backend/requirements.txt -r infra/requirements.txt
+          npm --prefix frontend audit --audit-level=high
+
+  stack-check:
+    name: Stack check (cdk synth)
+    needs: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: infra/requirements.txt
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: frontend-dist
+          path: frontend/dist
+      - run: pip install -r infra/requirements.txt
+      # The email is a dummy value: the real one is passed on the builder's machine at deploy time.
+      - run: npx --yes aws-cdk@2.1148.0 synth -q -c budget_email=ci-dummy@example.com
+        working-directory: infra

@@ -1,0 +1,44 @@
+## Review
+
+**Verdict:** READY
+**Reviewer:** aidlc-architecture-reviewer-agent
+**Date:** 2026-11-10T19:42:28Z
+**Iteration:** 2
+**Verdict Dictated:** no
+
+### Findings
+
+| ID | Severity | Location | Finding | Required action | Status |
+|---|---|---|---|---|---|
+| R-01 | Major | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/infrastructure-specification.md > Deployment > Teardown (and traceability.json > NFR5) | The teardown row says log groups are removed with the stack, but only the table and bucket are given a destroy policy. Log groups default to retain in CDK, and the Lambda log group, the API access log group and the log groups of the helper functions that empty the bucket and upload the site are not all inside the stack or not tagged. Those groups would survive `cdk destroy` and fail the NFR5 check of listing tagged resources. The CDK bootstrap stack and its asset bucket also stay behind and are not mentioned. | State an explicit destroy policy for every log group the stack creates, including the Lambda and API access logs. Say how the helper functions' log groups are handled or removed. Add a note that the CDK bootstrap resources are outside the stack. Change the post-destroy check so it also lists log groups by name prefix, not only by the Project tag. | Resolved (reviewer) |
+| R-02 | Major | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/infrastructure-specification.md > Networking and Estimated Cost; monitoring-design.md > Alerts | The 10 dollar ceiling (NFR4) rests on the 5-a-day cap (U3), which is per session. A caller can invent a new session ID on every request, so the cap does not protect the account. Budget alerts only send email and run hours behind real spend. The only real brake is the API throttle of 5 requests a second, and with 18-second calls that could mean about 90 concurrent Bedrock calls and many dollars a day. No reserved concurrency, no automatic stop and no worst-case figure appear. The design cannot show that NFR4 holds under abuse. | Add a hard brake to the design. Options are a Lambda reserved concurrency limit, or a budget action or alarm that sets concurrency to 0 when daily spend passes a limit. Also add a worst-case daily cost figure at the throttle rate. Or record in the document that the risk is accepted, with the reasoning. | Resolved (reviewer) |
+| R-03 | Major | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/cicd-pipeline.md > Deployment, Artifact management; infrastructure-specification.md > IaC approach | The site is TypeScript build output, but neither the CI stages nor the deploy steps include a frontend build. "cdk deploy uploads the build output" has nothing to upload from a clean checkout. The design also says nothing about clearing CloudFront's cache after a site update, so learners could see old files. | Add a frontend build step to the CI stages and to the manual deploy steps, before `cdk deploy`. Say where the output goes. Add cache clearing for the site files after upload. Keep the API behaviour uncached, as already stated. | Resolved (reviewer) |
+| R-04 | Minor | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/cicd-pipeline.md > Smoke checks (row: Send 11 requests in the same instant) | The check names no route. If it uses the create route, ten requests start paid Bedrock calls. API Gateway throttling is also best effort, so the 11th request is not guaranteed to be rejected. Sent through CloudFront from a laptop, "the same instant" is not achievable. | Name a cheap route for this check (for example the get-journey route). Word the expectation as "some requests in a burst of 15 or more get 429". | Resolved (reviewer) |
+| R-05 | Minor | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/monitoring-design.md > Alerts; cicd-pipeline.md > Deployment | Alarm emails go through an SNS email subscription that stays pending until the owner clicks a confirmation link. The deploy steps and smoke checks never mention it. Alarms for missing data are also unspecified, so a quiet period could read as a breach or as OK. | Add a confirm-subscription step to the deploy steps and smoke checks. State that missing data is treated as not breaching for the error alarms. | Resolved (reviewer) |
+| R-06 | Minor | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/infrastructure-specification.md > Deployment, Infrastructure Services > AWS Lambda and Amazon CloudFront | The timeout chain is only partly written down. The 15, 18, 2 and 20 second figures are never set beside the 25-second Lambda timeout and the 30-second API limit. The CloudFront origin response timeout is not named. `BEDROCK_TIMEOUT` has no value or link to the 15-second clock. The 18-plus-2 seconds leaves no margin under the browser's 20 seconds for cold start and network. | Add one small table: AI clock 15 s, request cap 18 s, save 2 s, browser 20 s, Lambda 25 s, API 30 s, CloudFront origin timeout 30 s or higher. Give `BEDROCK_TIMEOUT` a value. State that the save finishing inside the cap leaves the margin. | Resolved (reviewer) |
+| R-07 | Minor | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/monitoring-design.md > SLIs / SLOs and Metrics; cicd-pipeline.md > Build and check stages row 4 | The 100% within 20 seconds target has no measurement source, and a Lambda p95 cannot show it. The TypeScript coverage gate reads "counted with the Python floor as the team practice sets it", which is unclear. | Give the SLO a source (for example the Lambda duration maximum or a logged total time), or mark it as checked by hand. State the TypeScript coverage floor as 80% line coverage. | Resolved (reviewer) |
+| R-08 | Minor | aidlc/spaces/default/intents/261110-learning-journey-app/construction/u1-skeleton/infrastructure-design/monitoring-design.md > Alerts, and infrastructure-specification.md > Deployment, Spend brake row | With reserved concurrency of 3 and an API throttle burst of 10, up to 7 simultaneous creates can be admitted by the front door and then refused by Lambda itself. That refusal does not come from the API throttle and may reach the browser as a 5xx with no error body, which the contract treats differently from RATE_LIMITED. It would also trip the API 5xx alarm and count against the under-1% SLO. | State in the design what the learner sees when Lambda refuses for concurrency (for example a Try again message) and note that the 5xx alarm may fire from this cause. Alternatively lower the API burst to 3 to match. Not blocking at tens of users. | New |
+
+> R-01 Reviewer note: infrastructure-specification.md Teardown row now creates every log group explicitly (Lambda, API access log, both helper functions) with DESTROY and 14-day retention, names the bootstrap stack as staying, and the post-destroy check lists log groups by stack name prefix. cicd-pipeline.md deployment step 6 matches.
+
+> R-02 Reviewer note: Reserved concurrency of 3 with a deploy-time fallback, a worst-case figure (about 14,000 calls a day, order of ten dollars) and an explicit accepted risk with a manual brake (set concurrency to 0) are now in the specification.
+
+> R-03 Reviewer note: cicd-pipeline.md adds a frontend build step (5) before the stack check, a matching deploy step 2, and the deploy uploads frontend/dist and clears the CloudFront cache for site files.
+
+> R-04 Reviewer note: The throttle smoke check now uses 15 or more quick GET /api/v1/journey calls, which exist in the contract and make no model call, and says throttling is best effort.
+
+> R-05 Reviewer note: Email subscription confirmation is a deploy step and a smoke check; monitoring-design.md states missing data is treated as not breaching.
+
+> R-06 Reviewer note: The timeout chain table covers all layers, sets BEDROCK_TIMEOUT to 12 s, and states the 2 s browser margin.
+
+> R-07 Reviewer note: The first SLO names its measurement source (logged total request time, daily max) and CI step 4 sets an 80% TypeScript coverage floor.
+
+### Validation Tool Results
+
+| Tool | Result | Interpretation |
+|---|---|---|
+| No validation tool is listed for this stage | Not run | Cross-references checked by reading: GET /api/v1/journey and the RATE_LIMITED handling exist in contract-summary.md; the timeout chain agrees with functional-spec steps 5, 9 and 12. |
+
+### Summary
+
+All seven prior findings are fixed. One Minor gap remains, about how a Lambda concurrency refusal surfaces. A developer can build the stack from these artifacts without further architectural guidance.

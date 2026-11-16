@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u2-progress",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "No infrastructure needed: accessibility is a page-level concern; the pipeline's accessibility step stays a placeholder until U6" },
+    { "id": "NFR2", "status": "OK", "target": "One-update completion change with a 2 s total store limit on the existing Lambda and table; completion time SLO and dashboard widget" },
+    { "id": "NFR3", "status": "N/A", "target": "No infrastructure needed: resilience to Bedrock is the first unit's template fallback; U2 makes no model call" },
+    { "id": "NFR4", "status": "OK", "target": "No new service; a few extra on-demand table writes per session; Lambda concurrency stays unreserved under the account limit of 10" },
+    { "id": "NFR5", "status": "OK", "target": "No new resource is created, so the first unit's destroy and tag checks still remove everything" },
+    { "id": "NFR6", "status": "OK", "target": "Role gains only dynamodb:UpdateItem on the one table; HTTPS redirect and gitleaks unchanged" },
+    { "id": "NFR7", "status": "N/A", "target": "No infrastructure needed: U2 makes no model call; the Bedrock settings are unchanged" },
+    { "id": "NFR8", "status": "N/A", "target": "No infrastructure needed: browser and device support is a page concern" },
+    { "id": "NFR9", "status": "OK", "target": "Added Python, TypeScript and stack tests inside the existing GitHub Actions stages, with the 80% floor kept" },
+    { "id": "NFR10", "status": "OK", "target": "Existing structured request log line covers the new route; three completion metric filters (ok, save failed, time) and a dashboard widget added" },
+    { "id": "NFR11", "status": "OK", "target": "Two small edits to the one existing CDK stack; manual cdk deploy; no AWS keys in GitHub" }
+  ]
+}

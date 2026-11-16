@@ -1,0 +1,28 @@
+[tool.pytest.ini_options]
+pythonpath = ["backend/src", "infra"]
+testpaths = ["backend/tests", "infra/tests"]
+addopts = "-p no:cacheprovider"
+
+[tool.coverage.run]
+branch = false
+source = ["backend/src/learning_journey"]
+
+[tool.coverage.report]
+# Line-coverage floor from the Testing Contract. Never lower this to make a run pass.
+fail_under = 80
+show_missing = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["cdk.out", "node_modules", ".venv", "aidlc"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+extend-exclude = '''
+/(cdk\.out|node_modules|\.venv|aidlc)/
+'''

@@ -1,0 +1,128 @@
+{
+  "stage": "code-generation",
+  "unit": "u6-accessibility-pass",
+  "upstream_ids": [
+    "AC8.1.1",
+    "AC8.1.2",
+    "AC8.1.3",
+    "AC8.2.1",
+    "AC8.2.2",
+    "AC8.2.3",
+    "AC8.2.4",
+    "AC8.3.1",
+    "AC8.3.2",
+    "AC8.3.3",
+    "AC8.3.4",
+    "AC8.3.5",
+    "BR50.1",
+    "BR50.2",
+    "BR50.3",
+    "BR50.4",
+    "BR50.5",
+    "BR50.6",
+    "BR50.7",
+    "BR50.8"
+  ],
+  "coverage": [
+    {
+      "id": "AC8.1.1",
+      "status": "OK",
+      "target": "frontend/tests/keyboard.test.ts"
+    },
+    {
+      "id": "AC8.1.2",
+      "status": "OK",
+      "target": "frontend/tests/keyboard.test.ts"
+    },
+    {
+      "id": "AC8.1.3",
+      "status": "OK",
+      "target": "frontend/tests/keyboard.test.ts"
+    },
+    {
+      "id": "AC8.2.1",
+      "status": "OK",
+      "target": "frontend/tests/structure.test.ts"
+    },
+    {
+      "id": "AC8.2.2",
+      "status": "OK",
+      "target": "frontend/tests/structure.test.ts"
+    },
+    {
+      "id": "AC8.2.3",
+      "status": "OK",
+      "target": "frontend/tests/structure.test.ts"
+    },
+    {
+      "id": "AC8.2.4",
+      "status": "Deferred",
+      "target": "Build and Test: the person runs aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/manual-pass-scripts.md after the deploy; open until a pass is recorded"
+    },
+    {
+      "id": "AC8.3.1",
+      "status": "OK",
+      "target": "frontend/tests/contrast.test.ts"
+    },
+    {
+      "id": "AC8.3.2",
+      "status": "Deferred",
+      "target": "Build and Test: the person runs aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/manual-pass-scripts.md after the deploy; open until a pass is recorded"
+    },
+    {
+      "id": "AC8.3.3",
+      "status": "Deferred",
+      "target": "Build and Test: the person runs aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/manual-pass-scripts.md after the deploy; the stylesheet checks in frontend/tests/contrast.test.ts do not test zoom or reflow"
+    },
+    {
+      "id": "AC8.3.4",
+      "status": "OK",
+      "target": "frontend/tests/contrast.test.ts"
+    },
+    {
+      "id": "AC8.3.5",
+      "status": "OK",
+      "target": "frontend/tests/a11y.test.ts"
+    },
+    {
+      "id": "BR50.1",
+      "status": "OK",
+      "target": "frontend/tests/a11y.test.ts"
+    },
+    {
+      "id": "BR50.2",
+      "status": "Deferred",
+      "target": "Build and Test: the person runs the Lighthouse script in aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/manual-pass-scripts.md on the deployed site"
+    },
+    {
+      "id": "BR50.3",
+      "status": "OK",
+      "target": "frontend/tests/contrast.test.ts"
+    },
+    {
+      "id": "BR50.4",
+      "status": "OK",
+      "target": "frontend/tests/keyboard.test.ts"
+    },
+    {
+      "id": "BR50.5",
+      "status": "OK",
+      "target": "frontend/tests/structure.test.ts"
+    },
+    {
+      "id": "BR50.6",
+      "status": "OK",
+      "target": "aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/manual-pass-scripts.md"
+    },
+    {
+      "id": "BR50.7",
+      "status": "OK",
+      "target": "aidlc/spaces/default/intents/261110-learning-journey-app/construction/u6-accessibility-pass/code-generation/accessibility-results.md"
+    },
+    {
+      "id": "BR50.8",
+      "status": "OK",
+      "target": "frontend/package.json"
+    }
+  ]
+}

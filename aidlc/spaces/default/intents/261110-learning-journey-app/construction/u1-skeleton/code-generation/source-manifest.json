@@ -1,0 +1,24 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-skeleton",
+  "version": 1,
+  "writes": [
+    { "path": "infra/" },
+    { "path": "backend/" },
+    { "path": "frontend/src/" },
+    { "path": "frontend/tests/" },
+    { "path": "frontend/index.html" },
+    { "path": "frontend/styles.css" },
+    { "path": "frontend/build.mjs" },
+    { "path": "frontend/package.json" },
+    { "path": "frontend/package-lock.json" },
+    { "path": "frontend/tsconfig.json" },
+    { "path": "frontend/eslint.config.js" },
+    { "path": "frontend/.prettierrc" },
+    { "path": "frontend/.prettierignore" },
+    { "path": "frontend/vitest.config.ts" },
+    { "path": ".github/workflows/ci.yml" },
+    { "path": "pyproject.toml" },
+    { "path": ".gitignore" }
+  ]
+}

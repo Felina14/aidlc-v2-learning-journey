@@ -1,0 +1,28 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-protection",
+  "upstream_ids": ["AC7.1.1","AC7.1.2","AC7.2.1","AC7.2.2","AC9.2.1","AC9.2.4","AC9.2.2","AC9.2.3","BR20.1","BR21.1","BR20.2","BR20.3","BR20.4","BR20.5","BR21.2","BR22.1","BR22.2","BR23.1","BR23.2","BR24.1","BR24.2"],
+  "coverage": [
+    { "id": "AC7.1.1", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "AC7.1.2", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "AC7.2.1", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "AC7.2.2", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "AC9.2.1", "status": "N/A", "target": "delivered by u1-skeleton (the API-wide throttle, tested in infra/tests/test_stack.py)" },
+    { "id": "AC9.2.4", "status": "N/A", "target": "delivered by u1-skeleton (the API-wide throttle, tested in infra/tests/test_stack.py)" },
+    { "id": "AC9.2.2", "status": "OK", "target": "backend/tests/test_generator.py" },
+    { "id": "AC9.2.3", "status": "OK", "target": "frontend/tests/render.test.ts" },
+    { "id": "BR20.1", "status": "OK", "target": "backend/tests/test_usage_guard.py" },
+    { "id": "BR21.1", "status": "OK", "target": "backend/tests/test_generator.py" },
+    { "id": "BR20.2", "status": "OK", "target": "backend/tests/test_generator.py" },
+    { "id": "BR20.3", "status": "OK", "target": "backend/tests/test_usage_guard.py" },
+    { "id": "BR20.4", "status": "OK", "target": "backend/tests/test_usage_guard.py" },
+    { "id": "BR20.5", "status": "OK", "target": "backend/tests/test_store.py" },
+    { "id": "BR21.2", "status": "OK", "target": "frontend/tests/app.test.ts" },
+    { "id": "BR22.1", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "BR22.2", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "BR23.1", "status": "OK", "target": "backend/tests/test_handler.py" },
+    { "id": "BR23.2", "status": "OK", "target": "frontend/tests/state.test.ts" },
+    { "id": "BR24.1", "status": "OK", "target": "frontend/tests/confirm-dialog.test.ts" },
+    { "id": "BR24.2", "status": "OK", "target": "frontend/tests/render.test.ts" }
+  ]
+}

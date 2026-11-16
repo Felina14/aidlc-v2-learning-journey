@@ -1,0 +1,23 @@
+{
+  "stage": "functional-design",
+  "unit": "u5-encouragement",
+  "upstream_ids": ["AC5.1.1", "AC5.1.2", "AC5.1.3", "AC5.2.1", "AC5.2.2", "AC5.2.3", "AC6.1.1", "AC6.1.2", "AC6.1.3"],
+  "coverage": [
+    { "id": "AC5.1.1", "status": "OK", "target": "BR40.1" },
+    { "id": "AC5.1.2", "status": "OK", "target": "BR40.2, BR40.3" },
+    { "id": "AC5.1.3", "status": "OK", "target": "BR43.2" },
+    { "id": "AC5.2.1", "status": "OK", "target": "BR41.1" },
+    { "id": "AC5.2.2", "status": "OK", "target": "BR41.2" },
+    { "id": "AC5.2.3", "status": "OK", "target": "BR41.1" },
+    { "id": "AC6.1.1", "status": "OK", "target": "BR42.1" },
+    { "id": "AC6.1.2", "status": "OK", "target": "BR42.2, BR42.3, BR43.1, BR43.2" },
+    { "id": "AC6.1.3", "status": "OK", "target": "BR42.4" }
+  ],
+  "reverse": [
+    { "id": "BR41.3", "status": "N/A", "target": "printing the certificate (FR5.3); no acceptance criterion of its own" },
+    { "id": "BR42.3", "status": "N/A", "target": "how long a dismissed nudge stays dismissed (functional design Q2); no acceptance criterion of its own" },
+    { "id": "BR44.1", "status": "N/A", "target": "technical rule for the milestone call (contract C1, C5); no acceptance criterion of its own" },
+    { "id": "BR44.2", "status": "N/A", "target": "what happens when recording a milestone fails; no acceptance criterion of its own" },
+    { "id": "BR45.1", "status": "N/A", "target": "keeps the nudge, milestones and certificate separable for the agreed cut order; no acceptance criterion of its own" }
+  ]
+}

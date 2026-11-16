@@ -1,0 +1,28 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-progress",
+  "version": 1,
+  "writes": [
+    { "path": "backend/src/learning_journey/config.py" },
+    { "path": "backend/src/learning_journey/models.py" },
+    { "path": "backend/src/learning_journey/store.py" },
+    { "path": "backend/src/learning_journey/handler.py" },
+    { "path": "backend/tests/test_store.py" },
+    { "path": "backend/tests/test_handler.py" },
+    { "path": "frontend/src/progress.ts" },
+    { "path": "frontend/src/api.ts" },
+    { "path": "frontend/src/types.ts" },
+    { "path": "frontend/src/state.ts" },
+    { "path": "frontend/src/render.ts" },
+    { "path": "frontend/src/app.ts" },
+    { "path": "frontend/index.html" },
+    { "path": "frontend/styles.css" },
+    { "path": "frontend/tests/progress.test.ts" },
+    { "path": "frontend/tests/api.test.ts" },
+    { "path": "frontend/tests/state.test.ts" },
+    { "path": "frontend/tests/render.test.ts" },
+    { "path": "frontend/tests/app.test.ts" },
+    { "path": "infra/stacks/journey_stack.py" },
+    { "path": "infra/tests/test_stack.py" }
+  ]
+}

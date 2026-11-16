@@ -1,0 +1,18 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u1-skeleton",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR8", "NFR9", "NFR10", "NFR11"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "No infrastructure needed: accessibility is a page-level concern; the pipeline's accessibility check step is a placeholder until U6" },
+    { "id": "NFR2", "status": "OK", "target": "Lambda 512 MB with 25 s timeout under the 15 s and 18 s budgets; p95 duration on the dashboard" },
+    { "id": "NFR3", "status": "OK", "target": "Template fallback in the Lambda; template-fallback alarm (3 in 1 hour)" },
+    { "id": "NFR4", "status": "OK", "target": "Serverless on-demand services, CloudFront price class 100, Lambda concurrency left unreserved (the account limit of 10 is the ceiling, equal to the API burst), budget alerts at 2 dollars a day and 8 dollars a month; worst-case spend and the manual brake are recorded as an accepted risk" },
+    { "id": "NFR5", "status": "OK", "target": "RemovalPolicy.DESTROY on table, bucket and every explicit log group, bucket auto-delete, Project tag on every resource; post-destroy check also lists log groups by name prefix" },
+    { "id": "NFR6", "status": "OK", "target": "CloudFront HTTPS redirect, private S3 with origin access control, least-privilege Lambda role, response headers policy with CSP, gitleaks in CI" },
+    { "id": "NFR7", "status": "OK", "target": "Bedrock Nova Lite model ID setting; role limited to that model and its inference profile" },
+    { "id": "NFR8", "status": "N/A", "target": "No infrastructure needed: browser and device support is a page concern" },
+    { "id": "NFR9", "status": "OK", "target": "GitHub Actions: tests with 80% coverage floor, Bedrock faked" },
+    { "id": "NFR10", "status": "OK", "target": "Structured log lines with source and Bedrock outcome, log metric filters, dashboard, 14-day retention" },
+    { "id": "NFR11", "status": "OK", "target": "One CDK stack in Python in us-east-1, manual cdk deploy, GitHub Actions with no AWS keys" }
+  ]
+}
