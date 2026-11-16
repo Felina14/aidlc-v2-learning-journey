@@ -11,6 +11,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from aws_cdk import (
+    CfnOutput,
     CfnResource,
     Duration,
     RemovalPolicy,
@@ -91,6 +92,12 @@ class JourneyStack(Stack):
         self.api = self._api()
         self.distribution = self._distribution()
         self._site_deployment(frontend_dist)
+        CfnOutput(
+            self,
+            "SiteUrl",
+            value=f"https://{self.distribution.distribution_domain_name}",
+            description="The address of the live site; cdk deploy prints it when it finishes",
+        )
         self.alarm_topic = self._alarm_topic(budget_email)
         self._budgets(budget_email)
         self._metric_filters()

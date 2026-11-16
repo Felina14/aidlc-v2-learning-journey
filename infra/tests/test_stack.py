@@ -677,3 +677,14 @@ def test_the_site_upload_does_not_run_again_when_the_stack_is_deleted(template):
     props = next(iter(deployments.values()))["Properties"]
     assert props.get("RetainOnDelete") is True
     template.resource_count_is("Custom::S3AutoDeleteObjects", 1)
+
+
+# --- Deploy from a fresh clone: the deploy prints the site address ---
+
+
+def test_the_stack_outputs_the_site_address_from_the_distribution(template):
+    outputs = template.find_outputs("SiteUrl")
+    assert len(outputs) == 1
+    value = next(iter(outputs.values()))["Value"]
+    assert value["Fn::Join"][1][0] == "https://"
+    assert "DomainName" in value["Fn::Join"][1][1]["Fn::GetAtt"]

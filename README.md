@@ -30,7 +30,7 @@ Architecture, all in one CDK stack in us-east-1:
 | Logic | One Python 3.12 Lambda function on arm64 |
 | Data | One on-demand DynamoDB table; a TTL expires old plans after 90 days |
 | AI | Amazon Nova Lite on Amazon Bedrock |
-| Guard rails | Five new plans per learner per day, AWS Budgets alerts at $2 a day and $8 a month, CloudWatch alarms and a dashboard |
+| Guard rails | Five new plans per browser session per day (the browser creates the session ID, so a script can get round it), AWS Budgets alerts at $2 a day and $8 a month, CloudWatch alarms and a dashboard |
 
 ## What AI-DLC is
 
@@ -74,7 +74,8 @@ The quality engineer recorded two requirements as not met:
 - After `cdk destroy`, CDK's helper functions write late log lines and CloudWatch recreates their empty log groups.
   The rollback runbook has a one-line clean-up command (see below).
 - API Gateway HTTP API throttling works on a best-effort basis: a burst of 30 reads all returned 200. The daily
-  per-learner cap, the account's Lambda concurrency limit and the budget alerts still bound the cost.
+  per-session cap and the account's Lambda concurrency limit of ten slow how fast spend can grow, and the budget
+  alerts email you. None of them is a hard spending ceiling.
 
 ## What is in this repository
 
@@ -123,17 +124,42 @@ npx --yes aws-cdk@2.1148.0 bootstrap
 npx --yes aws-cdk@2.1148.0 deploy -c budget_email=you@example.com
 ```
 
-The stack prints the CloudFront address when it finishes. In this build's account, the idle stack cost under $0.01 a day.
+When the deploy finishes, it prints the site address as `LearningJourney.SiteUrl`. In this build's account, the idle stack cost under $0.01 a day.
+
+Check that the live app calls the real model in each teaching style. A request can succeed while the answer comes
+from the template fallback, so the check looks at `source`. Each run creates three plans, which expire after 90 days:
+
+```bash
+(
+set -euo pipefail
+SITE=$(aws cloudformation describe-stacks --stack-name LearningJourney --region us-east-1 \
+  --query "Stacks[0].Outputs[?OutputKey=='SiteUrl'].OutputValue" --output text)
+for STYLE in guide instructor planner; do
+  curl -fsS -X POST "$SITE/api/v1/journey" \
+    -H "X-Session-Id: $(uuidgen | tr A-Z a-z)" \
+    -H "Content-Type: application/json" \
+    -d "{\"topic\":\"Basics of bread baking\",\"style\":\"$STYLE\"}" \
+  | STYLE=$STYLE python3 -c 'import json, os, sys
+d = json.load(sys.stdin); s = os.environ["STYLE"]
+assert d["source"] == "ai", s + ": source is " + d["source"]
+assert d["teachingStyle"] == s, s + ": wrong style"
+assert 5 <= len(d["stages"]) <= 6, s + ": wrong stage count"
+if s == "planner":
+    assert all("hoursByKind" in st for st in d["stages"]), "planner: hoursByKind missing"
+print(s, "ok:", len(d["stages"]), "stages written by the model")'
+done
+)
+```
 
 Tear it down:
 
 ```bash
 cd infra
 npx --yes aws-cdk@2.1148.0 destroy -c budget_email=you@example.com
-for g in $(aws logs describe-log-groups --log-group-name-prefix LearningJourney --region us-east-1 \
-  --query 'logGroups[].logGroupName' --output text); do
-  aws logs delete-log-group --log-group-name "$g" --region us-east-1
-done
+aws logs describe-log-groups --log-group-name-prefix LearningJourney --region us-east-1 \
+  --query 'logGroups[].logGroupName' --output text
+# Another stack can share this prefix: delete only the names above that belong to this stack, one at a time
+aws logs delete-log-group --log-group-name <log group name> --region us-east-1
 ```
 
 ## Rebuild it with AI-DLC
@@ -141,7 +167,7 @@ done
 To run the same process on your own idea, you need Kiro CLI 3.x with enough credits for a full lifecycle.
 
 ```bash
-curl -fsSL https://github.com/awslabs/aidlc-workflows/releases/latest/download/install.sh | sh
+curl -fsSL https://github.com/awslabs/aidlc-workflows/releases/download/v2.11.3/install.sh | sh -s -- --version 2.11.3
 aidlc --version                    # this build used 2.11.3; keep one version for a whole build
 mkdir my-app && cd my-app && git init
 aidlc config --harness kiro-ide    # writes .kiro/ and AGENTS.md for Kiro CLI 3.x
